@@ -29,19 +29,23 @@ MongoClient.connect(
 		// );
 
 		// Insert Many Documents
-		// db.collection('tasks').insertMany(
+		// db.collection('users').insertMany(
 		// 	[
 		// 		{
-		// 			description: 'Do exercise',
-		// 			completed: true,
+		// 			name: 'Mo Salah',
+		// 			age: 39,
 		// 		},
 		// 		{
-		// 			description: 'Play Dota',
-		// 			completed: false,
+		// 			name: 'Snoop',
+		// 			age: 54,
 		// 		},
 		// 		{
-		// 			description: 'Update resume',
-		// 			completed: false,
+		// 			name: 'Banja',
+		// 			age: 25,
+		// 		},
+		// 		{
+		// 			name: 'Moze',
+		// 			age: 25,
 		// 		},
 		// 	],
 		// 	(error, result) => {
@@ -95,15 +99,27 @@ MongoClient.connect(
 		// 	.catch((err) => console.log(err));
 
 		//Update many documents
+		// 	db.collection('tasks')
+		// 		.updateMany(
+		// 			{ completed: false },
+		// 			{
+		// 				$set: {
+		// 					completed: true,
+		// 				},
+		// 			}
+		// 		)
+		// 		.then((result) => console.log(result))
+		// 		.catch((err) => console.log(err));
+
+		//Delete many Documents
+		// db.collection('users')
+		// 	.deleteMany({ age: 25 })
+		// 	.then((result) => console.log(result))
+		// 	.catch((err) => console.log(err));
+
+		//Delete one document
 		db.collection('tasks')
-			.updateMany(
-				{ completed: false },
-				{
-					$set: {
-						completed: true,
-					},
-				}
-			)
+			.deleteOne({ _id: new ObjectId('622e3017e837fbe8689b2d77') })
 			.then((result) => console.log(result))
 			.catch((err) => console.log(err));
 	}
