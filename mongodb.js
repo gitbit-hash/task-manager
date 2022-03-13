@@ -29,19 +29,19 @@ MongoClient.connect(
 		// );
 
 		// Insert Many Documents
-		// db.collection('users').insertMany(
+		// db.collection('tasks').insertMany(
 		// 	[
 		// 		{
-		// 			name: 'Buten',
-		// 			age: 33,
+		// 			description: 'Do exercise',
+		// 			completed: true,
 		// 		},
 		// 		{
-		// 			name: 'Biden',
-		// 			age: 36,
+		// 			description: 'Play Dota',
+		// 			completed: false,
 		// 		},
 		// 		{
-		// 			name: 'Pablo',
-		// 			age: 12,
+		// 			description: 'Update resume',
+		// 			completed: false,
 		// 		},
 		// 	],
 		// 	(error, result) => {
@@ -63,16 +63,16 @@ MongoClient.connect(
 		// });
 
 		//Query One Docuemnt using ID
-		db.collection('users').findOne(
-			{ _id: new ObjectId('622e1a2b36ae6b33a5506832') },
-			(error, result) => {
-				if (error) {
-					return console.log('Unable to find user');
-				}
+		// db.collection('users').findOne(
+		// 	{ _id: new ObjectId('622e1a2b36ae6b33a5506832') },
+		// 	(error, result) => {
+		// 		if (error) {
+		// 			return console.log('Unable to find user');
+		// 		}
 
-				console.log(result);
-			}
-		);
+		// 		console.log(result);
+		// 	}
+		// );
 
 		//Query many Documents
 		// db.collection('users')
@@ -84,5 +84,27 @@ MongoClient.connect(
 
 		// 		console.log(result);
 		// 	});
+
+		//Update one document
+		// db.collection('users')
+		// 	.updateOne(
+		// 		{ _id: new ObjectId('622e1a2b36ae6b33a5506832') },
+		// 		{ $set: { name: 'Lincolin' } }
+		// 	)
+		// 	.then((result) => console.log(result))
+		// 	.catch((err) => console.log(err));
+
+		//Update many documents
+		db.collection('tasks')
+			.updateMany(
+				{ completed: false },
+				{
+					$set: {
+						completed: true,
+					},
+				}
+			)
+			.then((result) => console.log(result))
+			.catch((err) => console.log(err));
 	}
 );
