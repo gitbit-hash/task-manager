@@ -21,6 +21,17 @@ const User = mongoose.model('User', {
 			}
 		},
 	},
+	password: {
+		type: String,
+		required: true,
+		minlength: 7,
+		trim: true,
+		validate(value) {
+			if (value.includes('password')) {
+				throw new Error('Password field must not conatins the word (password)');
+			}
+		},
+	},
 	age: {
 		type: Number,
 		default: 0,
@@ -41,7 +52,12 @@ const Task = mongoose.model('Task', {
 	},
 });
 
-const user = new User({ name: '  Baloe  ', email: 'JOIM@ld.cl.com', age: 33 });
+const user = new User({
+	name: '  Baloe  ',
+	email: 'JOIM@ld.cl.com',
+	password: '23',
+	age: 33,
+});
 user
 	.save()
 	.then((result) => console.log(result))
