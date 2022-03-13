@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/gitbit-hash/task-manager/issues"
   },
-  "homepage": "https://github.com/gitbit-hash/task-manager#readme"
+  "homepage": "https://github.com/gitbit-hash/task-manager#readme",
+  "dependencies": {
+    "mongodb": "^4.4.1"
+  }
 }
