@@ -118,9 +118,9 @@ MongoClient.connect(
 		// 	.catch((err) => console.log(err));
 
 		//Delete one document
-		db.collection('tasks')
-			.deleteOne({ _id: new ObjectId('622e3017e837fbe8689b2d77') })
-			.then((result) => console.log(result))
-			.catch((err) => console.log(err));
+		// db.collection('tasks')
+		// 	.deleteOne({ _id: new ObjectId('622e3017e837fbe8689b2d77') })
+		// 	.then((result) => console.log(result))
+		// 	.catch((err) => console.log(err));
 	}
 );
