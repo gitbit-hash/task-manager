@@ -1,25 +1,30 @@
 {
-  "name": "task-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gitbit-hash/task-manager.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/gitbit-hash/task-manager/issues"
-  },
-  "homepage": "https://github.com/gitbit-hash/task-manager#readme",
-  "dependencies": {
-    "mongodb": "^4.4.1",
-    "mongoose": "^6.2.6",
-    "validator": "^13.7.0"
-  }
+	"name": "task-app",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node src/index.js",
+		"dev": "nodemon src/index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gitbit-hash/task-manager.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/gitbit-hash/task-manager/issues"
+	},
+	"homepage": "https://github.com/gitbit-hash/task-manager#readme",
+	"dependencies": {
+		"express": "^4.17.3",
+		"mongodb": "^4.4.1",
+		"mongoose": "^6.2.6",
+		"validator": "^13.7.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.15"
+	}
 }
