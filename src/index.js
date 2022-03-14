@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
 require('./db/mongoose');
 
 const User = require('./db/models/user');
@@ -16,6 +18,32 @@ app.post('/users', (req, res) => {
 		.save()
 		.then((user) => res.status(201).send(user))
 		.catch((err) => res.status(400).send(err));
+});
+
+app.get('/users', (req, res) => {
+	User.find({})
+		.then((users) => res.send(users))
+		.catch((err) => res.status(500).send());
+});
+
+app.get('/users/:id', (req, res) => {
+	const id = req.params.id;
+
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(404).send();
+	}
+
+	User.findById(id)
+		.then((user) => {
+			if (!user) {
+				return res.status(404).send();
+			}
+
+			res.send(user);
+		})
+		.catch((err) => {
+			res.status(500).send(err);
+		});
 });
 
 app.post('/tasks', (req, res) => {
