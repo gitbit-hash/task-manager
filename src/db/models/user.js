@@ -11,6 +11,7 @@ const userSchema = new Schema({
 	email: {
 		type: String,
 		required: true,
+		unique: true,
 		lowercase: true,
 		validate(value) {
 			if (!validator.isEmail(value)) {
@@ -50,4 +51,22 @@ userSchema.pre('save', async function (next) {
 	next();
 });
 
-module.exports = model('User', userSchema);
+userSchema.statics.findByCredentials = async (email, password) => {
+	const user = await User.findOne({ email });
+
+	if (!user) {
+		throw new Error('Unable to login');
+	}
+
+	const isMatched = await bcrypt.compare(password, user.password);
+
+	if (!isMatched) {
+		throw new Error('Unable to login');
+	}
+
+	return user;
+};
+
+const User = model('User', userSchema);
+
+module.exports = User;
