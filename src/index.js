@@ -154,6 +154,46 @@ app.patch('/tasks/:id', async (req, res) => {
 	}
 });
 
+app.delete('/users/:id', async (req, res) => {
+	const id = req.params.id;
+
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(404).send();
+	}
+
+	try {
+		const user = await User.findByIdAndRemove(id);
+
+		if (!user) {
+			return res.status(404).send();
+		}
+
+		res.send(user);
+	} catch (error) {
+		res.status(500).send(error);
+	}
+});
+
+app.delete('/tasks/:id', async (req, res) => {
+	const id = req.params.id;
+
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(404).send();
+	}
+
+	try {
+		const task = await Task.findByIdAndDelete(id);
+
+		if (!task) {
+			return res.status(404).send();
+		}
+
+		res.send(task);
+	} catch (error) {
+		res.status(500).send(error);
+	}
+});
+
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
 });
