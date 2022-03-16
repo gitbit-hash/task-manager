@@ -21,12 +21,16 @@ router.post('/tasks', auth, async (req, res) => {
 });
 
 router.get('/tasks', auth, async (req, res) => {
+	const match = {};
+
+	if (req.query.completed) {
+		match.completed = req.query.completed === 'true';
+	}
+
 	try {
 		await req.user.populate({
 			path: 'tasks',
-			match: {
-				completed: false,
-			},
+			match,
 		});
 		res.send(req.user.tasks);
 	} catch (error) {
