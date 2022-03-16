@@ -3,6 +3,8 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const Task = require('./task');
+
 const userSchema = new Schema({
 	name: {
 		type: String,
@@ -50,12 +52,25 @@ const userSchema = new Schema({
 	],
 });
 
+userSchema.virtual('tasks', {
+	ref: 'Task',
+	localField: '_id',
+	foreignField: 'owner',
+});
+
 userSchema.pre('save', async function (next) {
 	const user = this;
 
 	if (user.isModified('password')) {
 		user.password = await bcrypt.hash(user.password, 8);
 	}
+
+	next();
+});
+
+userSchema.pre('remove', async function (next) {
+	const user = this;
+	await Task.deleteMany({ owner: user._id });
 
 	next();
 });
