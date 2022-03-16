@@ -21,32 +21,7 @@ router.get('/users/me', auth, async (req, res) => {
 	res.send(req.user);
 });
 
-router.get('/users/:id', async (req, res) => {
-	const id = req.params.id;
-
-	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(404).send();
-	}
-
-	try {
-		const user = await User.findById(id);
-		if (!user) {
-			return res.status(404).send();
-		}
-
-		res.send(user);
-	} catch (error) {
-		res.status(500).send();
-	}
-});
-
-router.patch('/users/:id', async (req, res) => {
-	const id = req.params.id;
-
-	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(404).send();
-	}
-
+router.patch('/users/me', auth, async (req, res) => {
 	const updates = Object.keys(req.body);
 	const allowedFields = ['name', 'email', 'password', 'age'];
 	const isValidUpdate = updates.every((update) =>
@@ -58,36 +33,21 @@ router.patch('/users/:id', async (req, res) => {
 	}
 
 	try {
-		const user = await User.findById(id);
+		updates.forEach((update) => (req.user[update] = req.body[update]));
 
-		updates.forEach((update) => (user[update] = req.body[update]));
+		await req.user.save();
 
-		await user.save();
-
-		if (!user) {
-			return res.status(404).send();
-		}
-		res.send(user);
+		res.send(req.user);
 	} catch (error) {
 		res.status(400).send(error);
 	}
 });
 
-router.delete('/users/:id', async (req, res) => {
-	const id = req.params.id;
-
-	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(404).send();
-	}
-
+router.delete('/users/me', auth, async (req, res) => {
 	try {
-		const user = await User.findByIdAndRemove(id);
+		await req.user.remove();
 
-		if (!user) {
-			return res.status(404).send();
-		}
-
-		res.send(user);
+		res.send(req.user);
 	} catch (error) {
 		res.status(500).send(error);
 	}
